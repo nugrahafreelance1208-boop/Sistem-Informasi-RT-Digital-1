@@ -420,6 +420,238 @@ export const IURAN_LIST = [
   }
 ]
 
+export const SURAT_WORKFLOW = [
+  {
+    no: 1,
+    title: 'Draft Pemohon',
+    desc: 'Disimpan oleh warga',
+    count: '0 Draft',
+    variant: 'muted'
+  },
+  {
+    no: 2,
+    title: 'Diajukan Warga',
+    desc: 'Menunggu verifikasi awal',
+    count: '3 Antrean',
+    variant: 'tertiary'
+  },
+  {
+    no: 3,
+    title: 'Verifikasi Sekretaris',
+    desc: 'Cek lampiran & domisili',
+    count: '2 Berkas',
+    variant: 'sekretaris'
+  },
+  {
+    no: 4,
+    title: 'Disetujui Ketua RT',
+    desc: 'Otorisasi TTD elektronik',
+    count: '4 Perlu TTD',
+    variant: 'ketua'
+  },
+  {
+    no: 5,
+    title: 'QR Diterbitkan',
+    desc: 'Arsip PDF siap unduh',
+    count: '38 Selesai',
+    variant: 'selesai'
+  }
+]
+
+export const SURAT_FILTER_TABS = [
+  { key: 'menunggu', label: 'Menunggu Persetujuan (4)' },
+  { key: 'verifikasi', label: 'Verifikasi Sekretaris (2)' },
+  { key: 'perbaikan', label: 'Perlu Perbaikan (1)' },
+  { key: 'arsip', label: 'Semua Arsip' }
+]
+
+/*__SURAT_APPS__*/
+
+export const SURAT_APPLICATIONS = [
+  {
+    key: 'skck-kevin',
+    kategori: 'SKCK',
+    nomor: '04/SKCK/RT04-RW08/X/2024',
+    nama: 'Kevin Pratama',
+    kavling: 'Kav. Blok B2/14 (Warga Tetap)',
+    keperluanLabel: 'Keperluan Administrasi',
+    keperluan: 'Melamar Pekerjaan BUMN',
+    keperluanSub: 'PT Telekomunikasi Seluler',
+    keperluanSubAccent: true,
+    keperluanError: false,
+    berkasLabel: 'Kelengkapan Berkas',
+    berkasOk: true,
+    berkasText: 'KTP & KK Lengkap',
+    berkasExtra: null,
+    diajukan: 'Diajukan: 24 Okt 2024, 08:30',
+    statusKey: 'menunggu',
+    statusText: 'Menunggu TTD Digital Pak RT',
+    statusVariant: 'menunggu',
+    selected: true,
+    previewKey: 'skck-kevin'
+  },
+  {
+    key: 'domisili-ratna',
+    kategori: 'DOMISILI USAHA',
+    nomor: '02/SKDU/RT04-RW08/X/2024',
+    nama: 'Ibu Ratna Dewi',
+    kavling: 'Kav. Blok A3/02',
+    keperluanLabel: 'Profil Usaha Mikro',
+    keperluan: 'Katering & Kue Kering Tradisional',
+    keperluanSub: 'Nama: "Dapur Bu Ratna"',
+    keperluanSubAccent: false,
+    keperluanError: false,
+    berkasLabel: 'Catatan Petugas',
+    berkasOk: false,
+    berkasText: 'KTP sah, menunggu foto lokasi dapur',
+    berkasExtra: null,
+    diajukan: 'Diajukan: 23 Okt 2024, 14:15',
+    statusKey: 'verifikasi',
+    statusText: 'Verifikasi Berkas Sekretaris',
+    statusVariant: 'verifikasi',
+    selected: false,
+    previewKey: 'domisili-ratna'
+  }
+]
+
+/*__SURAT_MORE__*/
+
+export const SURAT_APPLICATIONS_EXTRA = [
+  {
+    key: 'nikah-siti',
+    kategori: 'PENGANTAR NIKAH (N1-N4)',
+    nomor: '08/NA/RT04-RW08/X/2024',
+    nama: 'Siti Fatimah',
+    kavling: 'Kav. Blok C1/09',
+    keperluanLabel: 'Keperluan',
+    keperluan: 'Syarat KUA Kec. Sukamaju',
+    keperluanSub: 'Validasi RW Selesai',
+    keperluanSubAccent: true,
+    keperluanError: false,
+    berkasLabel: 'Tanggal Pengesahan',
+    berkasOk: false,
+    berkasText: '22 Okt 2024',
+    berkasExtra: 'Oleh: H. Bambang Sudiro',
+    diajukan: null,
+    statusKey: 'arsip',
+    statusText: 'Disetujui - Siap Unduh PDF',
+    statusVariant: 'selesai',
+    selected: false,
+    previewKey: 'nikah-siti'
+  },
+  {
+    key: 'pindah-bambang',
+    kategori: 'PINDAH DOMISILI',
+    nomor: '05/SKP/RT04-RW08/X/2024',
+    nama: 'Bpk. Bambang Hendro',
+    kavling: 'Kav. Blok D4/18 (Pindah 3 Jiwa)',
+    keperluanLabel: 'Catatan Verifikator',
+    keperluan: 'Kode Pos & RT/RW Tujuan Belum Diisi',
+    keperluanSub: 'Pindah ke: Kota Bandung',
+    keperluanSubAccent: false,
+    keperluanError: true,
+    berkasLabel: 'Tenggat Tanggapan',
+    berkasOk: false,
+    berkasText: '27 Okt 2024 (2 hari lagi)',
+    berkasExtra: 'Status notifikasi: Terkirim',
+    diajukan: null,
+    statusKey: 'perbaikan',
+    statusText: 'Perlu Revisi Alamat Tujuan',
+    statusVariant: 'revisi',
+    selected: false,
+    previewKey: 'pindah-bambang'
+  }
+]
+
+export const SURAT_APPLICATIONS_ALL = [...SURAT_APPLICATIONS, ...SURAT_APPLICATIONS_EXTRA]
+
+export const SURAT_TEMPLATES = [
+  {
+    nama: 'Pengantar SKCK',
+    desc: 'Untuk pembuatan SKCK baru atau perpanjangan di Polsek/Polres.',
+    icon: 'shield',
+    dipakai: 'Dipakai: 142x',
+    highlight: true
+  },
+  {
+    nama: 'Keterangan Domisili Usaha',
+    desc: 'Pendaftaran NIB UMKM, legalitas usaha rumahan, dan izin lingkungan.',
+    icon: 'storefront',
+    dipakai: 'Dipakai: 64x',
+    highlight: false
+  },
+  {
+    nama: 'Keterangan Belum Menikah',
+    desc: 'Persyaratan pengajuan KPR perbankan, beasiswa, dan instansi kedinasan.',
+    icon: 'favorite',
+    dipakai: 'Dipakai: 38x',
+    highlight: false
+  },
+  {
+    nama: 'Keterangan Tidak Mampu',
+    desc: 'Bantuan KIS PBI BPJS, beasiswa KIP Kuliah, dan bantuan sosial dinas.',
+    icon: 'volunteer_activism',
+    dipakai: 'Dipakai: 21x',
+    highlight: false
+  },
+  {
+    nama: 'Izin Keramaian Lingkungan',
+    desc: 'Pemberitahuan hajatan keluarga, penutupan jalan sementara, atau pengajian akbar.',
+    icon: 'celebration',
+    dipakai: 'Dipakai: 19x',
+    highlight: false
+  }
+]
+
+export const SURAT_PREVIEWS = {
+  'skck-kevin': {
+    judul: 'SURAT PENGANTAR KELAKUAN BAIK (SKCK)',
+    nomor: 'Nomor: 04 / SKCK / RT04-RW08 / X / 2024',
+    nama: 'KEVIN PRATAMA',
+    nik: '3276021509980004',
+    lahir: 'Jakarta, 15 September 1998',
+    gender: 'Laki-laki / Islam',
+    alamat: 'Griya Asri Blok B2 No. 14, RT 04/08 Sukamaju',
+    keperluan: 'Melamar Pekerjaan BUMN (Persyaratan SKCK Kepolisian)',
+    tanggal: 'Depok, 24 Oktober 2024'
+  },
+  'domisili-ratna': {
+    judul: 'SURAT KETERANGAN DOMISILI USAHA',
+    nomor: 'Nomor: 02 / SKDU / RT04-RW08 / X / 2024',
+    nama: 'RATNA DEWI',
+    nik: '3276025507810001',
+    lahir: 'Bandung, 12 Mei 1981',
+    gender: 'Perempuan / Islam',
+    alamat: 'Griya Asri Blok A3 No. 02, RT 04/08 Sukamaju',
+    keperluan: 'Pendaftaran NIB UMKM "Dapur Bu Ratna" (Katering & Kue Kering)',
+    tanggal: 'Depok, 23 Oktober 2024'
+  },
+  'nikah-siti': {
+    judul: 'SURAT PENGANTAR NIKAH (N1-N4)',
+    nomor: 'Nomor: 08 / NA / RT04-RW08 / X / 2024',
+    nama: 'SITI FATIMAH',
+    nik: '3276026601990005',
+    lahir: 'Depok, 26 Januari 1999',
+    gender: 'Perempuan / Islam',
+    alamat: 'Griya Asri Blok C1 No. 09, RT 04/08 Sukamaju',
+    keperluan: 'Persyaratan Administrasi KUA Kec. Sukamaju',
+    tanggal: 'Depok, 22 Oktober 2024'
+  },
+  'pindah-bambang': {
+    judul: 'SURAT KETERANGAN PINDAH DOMISILI',
+    nomor: 'Nomor: 05 / SKP / RT04-RW08 / X / 2024',
+    nama: 'BAMBANG HENDRO',
+    nik: '3276021005750018',
+    lahir: 'Semarang, 10 Mei 1975',
+    gender: 'Laki-laki / Islam',
+    alamat: 'Griya Asri Blok D4 No. 18, RT 04/08 Sukamaju (Pindah 3 Jiwa)',
+    keperluan: 'Pengurusan Pindah Domisili ke Kota Bandung (Menunggu Revisi Alamat Tujuan)',
+    tanggal: 'Depok, 24 Oktober 2024'
+  }
+}
+
+
+
 export const EXPENSE_LIST = [
   {
     judul: 'Honor Petugas Kebersihan',

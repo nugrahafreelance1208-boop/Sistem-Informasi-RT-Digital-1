@@ -14,6 +14,7 @@ cmd /c npm.cmd run dev
 - Dashboard: http://localhost:5173/#/
 - Data Warga / KK: http://localhost:5173/#/data-warga
 - Keuangan & Iuran: http://localhost:5173/#/keuangan
+- Layanan Surat Digital: http://localhost:5173/#/surat
 
 ## Struktur
 
@@ -22,11 +23,12 @@ src/
   main.jsx
   App.jsx                 # hash routing #/ <-> #/data-warga + toast global
   index.css
-  data/mockData.js        # NAV, SURAT_LIST, FINANCE_BARS, AGENDA_LIST, KARTU_KELUARGA, filter options, KEUANGAN_*, IURAN_LIST, EXPENSE_LIST
+  data/mockData.js        # NAV, SURAT_LIST, FINANCE_BARS, AGENDA_LIST, KARTU_KELUARGA, filter options, KEUANGAN_*, IURAN_LIST, EXPENSE_LIST, SURAT_*
   pages/
     DashboardPage.jsx     # konten dashboard utama (greeting, KPI, grafik, surat)
     DataWargaPage.jsx     # halaman /data-warga (banner, KPI KK, toolbar, tabel, detail)
     KeuanganPage.jsx      # halaman /keuangan (header, KPI kas, tabs, toolbar, tabel iuran, alokasi, panel kanan)
+    SuratPage.jsx         # halaman /surat (header, stepper, filter tabs, kartu permohonan, preview, katalog)
   components/
     Sidebar.jsx           # navigasi aktif antar halaman
     Header.jsx
@@ -59,6 +61,17 @@ src/
       ExpenseCard.jsx     # realisasi pengeluaran + subtotal + buku kas
       DonutCard.jsx       # donut SVG 94.8% + legenda 121/7/4
       QrisCard.jsx        # standee QRIS pembayaran mandiri
+    surat/
+      SuratHeader.jsx     # badge modul + kelola template + terbitkan baru
+      SuratStepper.jsx    # 5 tahap workflow + rata-rata 2 jam 15 mnt
+      SuratPills.jsx      # pill status menunggu/verifikasi/selesai/revisi
+      SuratCardParts.jsx  # grid 3 kolom + kepala kartu
+      SuratCardsA.jsx     # kartu SKCK selected + domisili usaha
+      SuratCardsB.jsx     # kartu nikah siap unduh + pindah revisi
+      SuratFilterTabs.jsx # 4 tab filter fungsional + urutan terbaru
+      SuratDocParts.jsx   # kop surat + QR box + stempel/TTD
+      SuratPreview.jsx    # live preview A4 + unduh/cetak/kirim WA
+      SuratTemplates.jsx  # katalog 5 template + contador pakai
     hooks/useClock.js
 ```
 
@@ -80,5 +93,13 @@ src/
 - Tabel 5 tagihan persis desain (Agus QRIS lunas, Dian VA lunas, Hendra menunggak merah + Ingatkan/paid, Rudi Slip BCA perlu verifikasi + tombol Verifikasi, Endang tunai lunas) + pagination
 - Widget alokasi tarif Rp 100.000 (Ronda 50k / Sampah 35k / Sosial 15k, SK-RT/004/2024)
 - Panel kanan: Realisasi Pengeluaran (3 item + subtotal Rp 2.750.000 + buku kas), donut SVG 94.8% (121 lunas / 7 menunggak / 4 subsidi), kartu QRIS standee
+
+## Fitur Layanan Surat Digital (/surat)
+
+- Header Modul Administrasi Wilayah RT04-REG-2024 + Kelola Template & Terbitkan Surat Baru
+- Stepper 5 tahap: Draft 0, Diajukan 3, Sekretaris 2, Ketua RT 4 TTD (highlight hijau), QR 38 selesai + rata-rata 2 jam 15 mnt
+- 4 tab filter fungsional: Menunggu (SKCK Kevin selected + TTD/perbaikan), Verifikasi (Domisili Ratna + lampiran/WA), Perbaikan (Pindah Bambang border merah + kirim ulang), Arsip (semua 4 kartu)
+- Live preview A4 sticky: kop RT04/RW08 Sukamaju-Depok, judul + nomor dinamis per kartu yang diklik (Tampil di Preview / Lihat Rincian / Lampiran), tabel data diri, QR SHA256 + stempel + TTD H. Bambang Sudiro, tombol PDF/cetak/kirim WA
+- Katalog 5 template (SKCK 142x, Domisili Usaha 64x, Belum Menikah 38x, Tidak Mampu 21x, Izin Keramaian 19x) + tombol Pakai per template
 
 Design token (warna, spacing, font) 1:1 dari `tailwind.config` di file HTML desain.

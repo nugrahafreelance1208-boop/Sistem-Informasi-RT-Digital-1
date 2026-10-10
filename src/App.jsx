@@ -5,11 +5,13 @@ import ApprovalModal from './components/ApprovalModal'
 import DashboardPage from './pages/DashboardPage'
 import DataWargaPage from './pages/DataWargaPage'
 import KeuanganPage from './pages/KeuanganPage'
+import SuratPage from './pages/SuratPage'
 
 function getRoute() {
   const hash = window.location.hash.replace(/^#\/?/, '')
   if (hash.startsWith('data-warga')) return 'data-warga'
   if (hash.startsWith('keuangan')) return 'keuangan'
+  if (hash.startsWith('surat')) return 'surat'
   return 'dashboard'
 }
 
@@ -32,6 +34,7 @@ export default function App() {
   const navigate = useCallback((path) => {
     if (path === 'data-warga') window.location.hash = '#/data-warga'
     else if (path === 'keuangan-iuran') window.location.hash = '#/keuangan'
+    else if (path === 'layanan-surat-digital') window.location.hash = '#/surat'
     else if (path === 'dashboard') window.location.hash = '#/'
     else showToast('Halaman tersebut belum dibangun pada tahap ini.')
   }, [showToast])
@@ -53,6 +56,8 @@ export default function App() {
             <DataWargaPage onToast={showToast} />
           ) : route === 'keuangan' ? (
             <KeuanganPage onToast={showToast} />
+          ) : route === 'surat' ? (
+            <SuratPage onToast={showToast} />
           ) : (
             <DashboardPage onToast={showToast} onReviewSurat={setSelectedSurat} />
           )}

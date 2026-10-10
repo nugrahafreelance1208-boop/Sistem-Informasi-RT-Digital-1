@@ -51,7 +51,8 @@ export default function Sidebar({ activePath, onNavigate }) {
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.path === activePath ||
-              (item.path === 'keuangan-iuran' && activePath === 'keuangan')
+              (item.path === 'keuangan-iuran' && activePath === 'keuangan') ||
+              (item.path === 'layanan-surat-digital' && activePath === 'surat')
             return (
               <button
                 key={item.path}
