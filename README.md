@@ -13,6 +13,7 @@ cmd /c npm.cmd run dev
 
 - Dashboard: http://localhost:5173/#/
 - Data Warga / KK: http://localhost:5173/#/data-warga
+- Keuangan & Iuran: http://localhost:5173/#/keuangan
 
 ## Struktur
 
@@ -21,10 +22,11 @@ src/
   main.jsx
   App.jsx                 # hash routing #/ <-> #/data-warga + toast global
   index.css
-  data/mockData.js        # NAV, SURAT_LIST, FINANCE_BARS, AGENDA_LIST, KARTU_KELUARGA, filter options
+  data/mockData.js        # NAV, SURAT_LIST, FINANCE_BARS, AGENDA_LIST, KARTU_KELUARGA, filter options, KEUANGAN_*, IURAN_LIST, EXPENSE_LIST
   pages/
     DashboardPage.jsx     # konten dashboard utama (greeting, KPI, grafik, surat)
     DataWargaPage.jsx     # halaman /data-warga (banner, KPI KK, toolbar, tabel, detail)
+    KeuanganPage.jsx      # halaman /keuangan (header, KPI kas, tabs, toolbar, tabel iuran, alokasi, panel kanan)
   components/
     Sidebar.jsx           # navigasi aktif antar halaman
     Header.jsx
@@ -44,6 +46,19 @@ src/
       WargaTable.jsx      # tabel 5 KK + masking NIK
       WargaDetailInfo.jsx # header detail + No.KK + kontak + iuran
       WargaDetail.jsx     # anggota keluarga + aksi + kartu keamanan UU PDP
+    keuangan/
+      KeuanganHeader.jsx  # badge modul aktif + 3 aksi operasional
+      KeuanganKpiA.jsx    # kartu saldo kas + penerimaan
+      KeuanganKpi.jsx     # wrapper 4 KPI + pengeluaran + tunggakan
+      KeuanganTabs.jsx    # 4 tab modul (tagihan aktif, lainnya toast)
+      KeuanganToolbar.jsx # filter periode/status/metode + WA massal + unduh/cetak
+      IuranBadges.jsx     # badge Lunas/Menunggak/Perlu Verifikasi
+      IuranCells.jsx      # sel metode/ref + aksi baris kontekstual
+      IuranTable.jsx      # tabel 5 tagihan persis desain
+      AlokasiWidget.jsx   # alokasi tarif 50/35/15 + SK-RT/004/2024
+      ExpenseCard.jsx     # realisasi pengeluaran + subtotal + buku kas
+      DonutCard.jsx       # donut SVG 94.8% + legenda 121/7/4
+      QrisCard.jsx        # standee QRIS pembayaran mandiri
     hooks/useClock.js
 ```
 
@@ -55,5 +70,15 @@ src/
 - Tabel 5 KK persis desain (Rahmat, Hendra, Rizky-alert merah, Siti, Denny) + pagination 1-5 dari 128
 - Klik baris → panel detail kanan terupdate (nama, blok, No.KK, kontak, iuran, anggota dengan inisial + verified, tombol cetak/mutasi/histori)
 - Kartu keamanan UU PDP + enkripsi TLS 1.3
+
+## Fitur Keuangan & Iuran (/keuangan)
+
+- Sub-header Modul Kas & Iuran Aktif TA 2024 + 3 aksi (rekonsiliasi, generate tagihan, catat kas)
+- 4 KPI bento: Saldo Rp 48.650.000 (VA Rp 42.150.000 + tunai Rp 6.500.000), Penerimaan Okt Rp 12.800.000 (94.8% / target Rp 13.500.000), Pengeluaran Rp 4.250.000, Tunggakan Rp 700.000 (7 KK, kolektabilitas 90.5%)
+- 4 tab modul (Tagihan aktif; Buku Kas/Tarif/Audit → toast "segera hadir")
+- Toolbar: filter Periode (Okt–Jul 2024), Status (semua/lunas/menunggak/bebas — fungsional), Metode (QRIS-VA/transfer/tunai — fungsional), tombol WA Massal 7 KK + unduh + cetak
+- Tabel 5 tagihan persis desain (Agus QRIS lunas, Dian VA lunas, Hendra menunggak merah + Ingatkan/paid, Rudi Slip BCA perlu verifikasi + tombol Verifikasi, Endang tunai lunas) + pagination
+- Widget alokasi tarif Rp 100.000 (Ronda 50k / Sampah 35k / Sosial 15k, SK-RT/004/2024)
+- Panel kanan: Realisasi Pengeluaran (3 item + subtotal Rp 2.750.000 + buku kas), donut SVG 94.8% (121 lunas / 7 menunggak / 4 subsidi), kartu QRIS standee
 
 Design token (warna, spacing, font) 1:1 dari `tailwind.config` di file HTML desain.

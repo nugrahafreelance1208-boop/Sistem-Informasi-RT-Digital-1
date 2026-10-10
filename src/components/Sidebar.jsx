@@ -49,7 +49,9 @@ export default function Sidebar({ activePath, onNavigate }) {
         </div>
         <nav className="flex flex-col gap-1 px-space-md">
           {NAV_ITEMS.map((item) => {
-            const isActive = item.path === activePath
+            const isActive =
+              item.path === activePath ||
+              (item.path === 'keuangan-iuran' && activePath === 'keuangan')
             return (
               <button
                 key={item.path}

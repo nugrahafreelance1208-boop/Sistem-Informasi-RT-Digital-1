@@ -270,3 +270,183 @@ KARTU_KELUARGA.forEach((k) => {
   })
 })
 
+export const KEUANGAN_TABS = [
+  { key: 'tagihan', label: 'Tagihan & Iuran Warga', icon: 'receipt_long', badge: '128 KK' },
+  { key: 'bukukas', label: 'Buku Kas & Pengeluaran', icon: 'menu_book' },
+  { key: 'tarif', label: 'Pengaturan Tarif Iuran', icon: 'tune' },
+  { key: 'audit', label: 'Laporan Audit & SPJ', icon: 'verified_user' }
+]
+
+export const PERIODE_OPTIONS = [
+  { value: 'okt-2024', label: 'Oktober 2024' },
+  { value: 'sep-2024', label: 'September 2024' },
+  { value: 'agu-2024', label: 'Agustus 2024' },
+  { value: 'jul-2024', label: 'Juli 2024' }
+]
+
+export const IURAN_STATUS_OPTIONS = [
+  { value: 'all', label: 'Semua Status (128 KK)' },
+  { value: 'lunas', label: 'Lunas (121 KK)' },
+  { value: 'menunggak', label: 'Menunggak (7 KK)' },
+  { value: 'bebas', label: 'Bebas Iuran Lansia/Dhuafa (4 KK)' }
+]
+
+export const METODE_OPTIONS = [
+  { value: 'all', label: 'Semua Saluran Bayar' },
+  { value: 'qris', label: 'QRIS & Virtual Account (Otomatis)' },
+  { value: 'transfer', label: 'Transfer Bank Manual' },
+  { value: 'tunai', label: 'Kas Tunai (Koordinator Gang)' }
+]
+
+export const ALOKASI_TARIF = [
+  {
+    nama: 'Keamanan & Pos Ronda',
+    persen: '50% dari total',
+    nominal: 'Rp 50.000',
+    icon: 'shield',
+    box: 'bg-primary-container text-on-primary',
+    amount: 'text-primary-container'
+  },
+  {
+    nama: 'Petugas Sampah & DLH',
+    persen: '35% dari total',
+    nominal: 'Rp 35.000',
+    icon: 'delete_sweep',
+    box: 'bg-secondary text-on-secondary',
+    amount: 'text-secondary'
+  },
+  {
+    nama: 'Dana Sosial & Takziah',
+    persen: '15% dari total',
+    nominal: 'Rp 15.000',
+    icon: 'volunteer_activism',
+    box: 'bg-tertiary-container text-on-tertiary',
+    amount: 'text-on-surface'
+  }
+]
+
+export const IURAN_LIST = [
+  {
+    key: 'agus',
+    nama: 'Agus Salim',
+    nik: '3271040809780002',
+    initials: 'AS',
+    blok: 'Blok B2 No. 14',
+    gang: 'Gang Anggrek',
+    nominal: 'Rp 100.000',
+    rincian: 'Kebersihan (35k) + Ronda (50k) + Sos (15k)',
+    metode: 'QRIS SIP-RT',
+    metodeIcon: 'qr_code_2',
+    metodeIconColor: 'text-secondary',
+    ref: '#TRX-948102',
+    refLink: false,
+    status: 'Lunas',
+    statusKey: 'lunas',
+    statusTime: '02 Okt, 08:14',
+    alert: false
+  },
+  {
+    key: 'dian',
+    nama: 'Dian Permatasari',
+    nik: '3271044410880004',
+    initials: 'DP',
+    blok: 'Blok A1 No. 03',
+    gang: 'Jalan Utama',
+    nominal: 'Rp 100.000',
+    rincian: 'Kebersihan (35k) + Ronda (50k) + Sos (15k)',
+    metode: 'VA Mandiri',
+    metodeIcon: 'account_balance',
+    metodeIconColor: 'text-primary-container',
+    ref: '#TRX-948110',
+    refLink: false,
+    status: 'Lunas',
+    statusKey: 'lunas',
+    statusTime: '04 Okt, 14:22',
+    alert: false
+  },
+  {
+    key: 'hendra-w',
+    nama: 'Hendra Wijaya',
+    nik: '3271041112850001',
+    initials: 'HW',
+    blok: 'Blok C3 No. 08',
+    gang: 'Gang Mawar',
+    nominal: 'Rp 100.000',
+    rincian: 'Kebersihan (35k) + Ronda (50k) + Sos (15k)',
+    metode: null,
+    ref: null,
+    status: 'Menunggak',
+    statusKey: 'menunggak',
+    statusTime: 'Jatuh Tempo: 10 Okt',
+    alert: true
+  },
+  {
+    key: 'rudi',
+    nama: 'Rudi Hartono',
+    nik: '3271040505800007',
+    initials: 'RH',
+    blok: 'Blok B1 No. 02',
+    gang: 'Gang Anggrek',
+    nominal: 'Rp 100.000',
+    rincian: 'Kebersihan (35k) + Ronda (50k) + Sos (15k)',
+    metode: 'Slip BCA',
+    metodeIcon: 'upload_file',
+    metodeIconColor: 'text-outline',
+    ref: 'Lihat Foto Struk',
+    refLink: true,
+    status: 'Perlu Verifikasi',
+    statusKey: 'verifikasi',
+    statusTime: 'Upload 2 jam lalu',
+    alert: false
+  },
+  {
+    key: 'endang',
+    nama: 'Endang Nurdin',
+    nik: '3271041907720005',
+    initials: 'EN',
+    blok: 'Blok D1 No. 05',
+    gang: 'Gang Melati',
+    nominal: 'Rp 100.000',
+    rincian: 'Kebersihan (35k) + Ronda (50k) + Sos (15k)',
+    metode: 'Tunai Koordinator',
+    metodeIcon: 'payments',
+    metodeIconColor: 'text-secondary',
+    ref: 'Diterima: Bpk. Joko',
+    refLink: false,
+    status: 'Lunas',
+    statusKey: 'lunas',
+    statusTime: '05 Okt, 19:30',
+    alert: false
+  }
+]
+
+export const EXPENSE_LIST = [
+  {
+    judul: 'Honor Petugas Kebersihan',
+    desc: 'Pak Yanto & Pak Joko (2 Orang)',
+    nominal: 'Rp 1.500.000',
+    icon: 'cleaning_services',
+    box: 'bg-secondary-container text-on-secondary-container',
+    meta: '01 Okt 2024 • Tunai',
+    doc: 'Kwitansi SPJ'
+  },
+  {
+    judul: 'Token Listrik Pos & Lampu Jalan',
+    desc: 'Gardu Utama RT 04 (PLN Mobile)',
+    nominal: 'Rp 450.000',
+    icon: 'bolt',
+    box: 'bg-tertiary-fixed text-on-tertiary-fixed',
+    meta: '03 Okt 2024 • Autodebet',
+    doc: 'Struk PLN'
+  },
+  {
+    judul: 'Perbaikan Pintu Gerbang Portal',
+    desc: 'Las engsel & gembok otomatis pos 1',
+    nominal: 'Rp 800.000',
+    icon: 'build',
+    box: 'bg-surface-container-highest text-on-surface',
+    meta: '05 Okt 2024 • Mandiri Transfer',
+    doc: 'Nota Bengkel Las'
+  }
+]
+
