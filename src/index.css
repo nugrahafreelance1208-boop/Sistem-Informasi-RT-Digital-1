@@ -46,3 +46,29 @@
 .modal-pop {
   animation: fadeZoomIn 0.15s ease-out;
 }
+
+tr.row-normal {
+  background-color: #ffffff;
+}
+tr.row-normal:hover {
+  background-color: rgb(239 244 255 / 0.7);
+}
+tr.row-selected {
+  background-color: rgb(239 244 255 / 0.7);
+}
+tr.row-selected:hover {
+  background-color: rgb(239 244 255 / 0.9);
+}
+tr.row-alert {
+  background-color: rgb(255 218 214 / 0.2);
+  cursor: pointer;
+}
+tr.row-alert:hover {
+  background-color: rgb(255 218 214 / 0.3);
+}
+tr.row-normal,
+tr.row-selected,
+tr.row-alert {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}

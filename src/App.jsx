@@ -1,23 +1,37 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import Header from './components/Header'
-import GreetingBar from './components/GreetingBar'
-import KpiCards from './components/KpiCards'
-import FinanceChart from './components/FinanceChart'
-import SuratTable from './components/SuratTable'
-import DemografiCard from './components/DemografiCard'
-import AgendaCard from './components/AgendaCard'
-import PengumumanCard from './components/PengumumanCard'
 import ApprovalModal from './components/ApprovalModal'
+import DashboardPage from './pages/DashboardPage'
+import DataWargaPage from './pages/DataWargaPage'
+
+function getRoute() {
+  const hash = window.location.hash.replace(/^#\/?/, '')
+  if (hash.startsWith('data-warga')) return 'data-warga'
+  return 'dashboard'
+}
 
 export default function App() {
+  const [route, setRoute] = useState(() => getRoute())
   const [selectedSurat, setSelectedSurat] = useState(null)
   const [toast, setToast] = useState('')
 
-  const showToast = (msg) => {
+  useEffect(() => {
+    const onHash = () => setRoute(getRoute())
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+
+  const showToast = useCallback((msg) => {
     setToast(msg)
     setTimeout(() => setToast(''), 3200)
-  }
+  }, [])
+
+  const navigate = useCallback((path) => {
+    if (path === 'data-warga') window.location.hash = '#/data-warga'
+    else if (path === 'dashboard') window.location.hash = '#/'
+    else showToast('Halaman tersebut belum dibangun pada tahap ini.')
+  }, [showToast])
 
   const handleCloseModal = (signed) => {
     setSelectedSurat(null)
@@ -26,32 +40,17 @@ export default function App() {
     }
   }
 
-  const handleExport = () => {
-    showToast('Menyiapkan Berkas Laporan Bulanan (PDF & Excel RT 04 Sukamaju)... Pengunduhan akan dimulai.')
-  }
-
   return (
     <div className="bg-surface font-body-md text-on-surface antialiased min-h-screen">
-      <Sidebar />
+      <Sidebar activePath={route} onNavigate={navigate} />
       <div className="pl-0 lg:pl-64">
         <Header />
         <main className="relative pt-16 bg-surface w-full px-gutter min-h-screen">
-          <div className="flex flex-col w-full pb-space-xl">
-            <GreetingBar onExport={handleExport} />
-            <KpiCards />
-
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-start">
-              <div className="lg:col-span-8 flex flex-col gap-gutter">
-                <FinanceChart />
-                <SuratTable onReview={setSelectedSurat} />
-              </div>
-              <div className="lg:col-span-4 flex flex-col gap-gutter">
-                <DemografiCard />
-                <AgendaCard />
-                <PengumumanCard />
-              </div>
-            </div>
-          </div>
+          {route === 'data-warga' ? (
+            <DataWargaPage onToast={showToast} />
+          ) : (
+            <DashboardPage onToast={showToast} onReviewSurat={setSelectedSurat} />
+          )}
         </main>
       </div>
 
@@ -66,3 +65,4 @@ export default function App() {
     </div>
   )
 }
+

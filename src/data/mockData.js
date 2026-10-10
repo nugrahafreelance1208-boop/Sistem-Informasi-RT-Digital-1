@@ -1,10 +1,10 @@
 export const NAV_ITEMS = [
-  { label: 'Dashboard Utama', icon: 'dashboard', path: 'dashboard-utama', active: true },
-  { label: 'Kependudukan & KK', icon: 'badge', path: 'kependudukan-kk' },
-  { label: 'Keuangan & Iuran', icon: 'account_balance_wallet', path: 'keuangan-iuran' },
-  { label: 'Layanan Surat Digital', icon: 'description', path: 'layanan-surat-digital' },
-  { label: 'Pengaduan & Waspada', icon: 'fmd_bad', path: 'pengaduan-waspada' },
-  { label: 'Pengaturan Sistem', icon: 'settings', path: 'pengaturan-sistem' }
+  { label: 'Dashboard Utama', icon: 'dashboard', path: 'dashboard', href: '#/' },
+  { label: 'Kependudukan & KK', icon: 'badge', path: 'data-warga', href: '#/data-warga' },
+  { label: 'Keuangan & Iuran', icon: 'account_balance_wallet', path: 'keuangan-iuran', href: '#/keuangan' },
+  { label: 'Layanan Surat Digital', icon: 'description', path: 'layanan-surat-digital', href: '#/surat' },
+  { label: 'Pengaduan & Waspada', icon: 'fmd_bad', path: 'pengaduan-waspada', href: '#/pengaduan' },
+  { label: 'Pengaturan Sistem', icon: 'settings', path: 'pengaturan-sistem', href: '#/pengaturan' }
 ]
 
 export const SURAT_LIST = [
@@ -105,3 +105,168 @@ export const AGENDA_LIST = [
     desc: 'Balai Warga RT 04 Sukamaju. Agenda: Pembahasan penambahan CCTV gang barat.'
   }
 ]
+
+export const BLOK_OPTIONS = [
+  { value: 'all', label: 'Semua Blok' },
+  { value: 'blok-a', label: 'Blok A (Asri)' },
+  { value: 'blok-b', label: 'Blok B (Boulevard)' },
+  { value: 'blok-c', label: 'Blok C (Cendana)' }
+]
+
+export const DOMISILI_OPTIONS = [
+  { value: 'all', label: 'Status Domisili' },
+  { value: 'tetap', label: 'Warga Tetap' },
+  { value: 'kontrak', label: 'Kontrak / Sewa' },
+  { value: 'kos', label: 'Kos / Bujang' },
+  { value: 'mutasi', label: 'Mutasi Keluar' }
+]
+
+export const VERIFIKASI_OPTIONS = [
+  { value: 'all', label: 'Status Verifikasi' },
+  { value: 'verified', label: 'Terverifikasi' },
+  { value: 'pending', label: 'Menunggu Verifikasi' }
+]
+
+function maskNik(full) {
+  return `${full.slice(0, 6)}******${full.slice(-4)}`
+}
+
+function initials(name) {
+  return name
+    .replace(/^Kel\.\s+/i, '')
+    .replace(/^Hj\.\s+/i, '')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0].toUpperCase())
+    .join('')
+}
+
+export const KARTU_KELUARGA = [
+  {
+    key: 'rahmat',
+    blok: 'Blok B3 No. 12',
+    jalan: 'Jl. Asri Boulevard',
+    blokGroup: 'blok-b',
+    kepala: 'Kel. Rahmat Hidayat',
+    namaPendek: 'Rahmat Hidayat',
+    nikFull: '3275012803831092',
+    anggota: 4,
+    statusTinggal: 'Tetap',
+    statusTinggalKey: 'tetap',
+    iuran: 'Lunas',
+    verifikasi: 'Sah',
+    verifikasiKey: 'verified',
+    alert: false,
+    noKK: '3275010903120042',
+    kontak: '+62 812-8821-9921',
+    iuranLabel: 'Lunas (Okt 2024)',
+    members: [
+      { nama: 'Rahmat Hidayat', meta: 'Kepala Keluarga • 41 Thn • Karyawan Swasta', primary: true },
+      { nama: 'Nurul Wahyuni', meta: 'Istri • 38 Thn • Wiraswasta', primary: false },
+      { nama: 'Faris Ramadhan', meta: 'Anak (Pertama) • 14 Thn • Pelajar', primary: false },
+      { nama: 'Alya Azkadina', meta: 'Anak (Kedua) • 8 Thn • Pelajar', primary: false }
+    ]
+  },
+  {
+    key: 'hendra',
+    blok: 'Blok A1 No. 04',
+    jalan: 'Jl. Mawar Raya',
+    blokGroup: 'blok-a',
+    kepala: 'Kel. Hendra Gunawan',
+    namaPendek: 'Hendra Gunawan',
+    nikFull: '3275011409824421',
+    anggota: 3,
+    statusTinggal: 'Tetap',
+    statusTinggalKey: 'tetap',
+    iuran: 'Lunas',
+    verifikasi: 'Sah',
+    verifikasiKey: 'verified',
+    alert: false,
+    noKK: '3275011409824421',
+    kontak: '+62 813-2204-7710',
+    iuranLabel: 'Lunas (Okt 2024)',
+    members: [
+      { nama: 'Hendra Gunawan', meta: 'Kepala Keluarga • 42 Thn • PNS Guru', primary: true },
+      { nama: 'Dewi Lestari', meta: 'Istri • 39 Thn • Ibu Rumah Tangga', primary: false },
+      { nama: 'Bagas Pratama', meta: 'Anak • 12 Thn • Pelajar', primary: false }
+    ]
+  },
+  {
+    key: 'rizky',
+    blok: 'Blok C2 No. 08',
+    jalan: 'Jl. Cendana IV',
+    blokGroup: 'blok-c',
+    kepala: 'Kel. Rizky Mahendra',
+    namaPendek: 'Rizky Mahendra',
+    nikFull: '3275010901958890',
+    anggota: 2,
+    statusTinggal: 'Kontrak/Sewa',
+    statusTinggalKey: 'kontrak',
+    iuran: 'Belum Bayar',
+    verifikasi: 'Cek KTP',
+    verifikasiKey: 'pending',
+    alert: true,
+    noKK: '3275010901958890',
+    kontak: '+62 857-6400-1182',
+    iuranLabel: 'Menunggak (Sep–Okt 2024)',
+    members: [
+      { nama: 'Rizky Mahendra', meta: 'Kepala Keluarga • 29 Thn • Driver Online', primary: true },
+      { nama: 'Putri Anjani', meta: 'Istri • 27 Thn • Karyawan Toko', primary: false }
+    ]
+  },
+  {
+    key: 'siti',
+    blok: 'Blok B1 No. 07',
+    jalan: 'Jl. Boulevard Barat',
+    blokGroup: 'blok-b',
+    kepala: 'Kel. Hj. Siti Aminah',
+    namaPendek: 'Siti Aminah',
+    nikFull: '3275015506603311',
+    anggota: 5,
+    statusTinggal: 'Tetap',
+    statusTinggalKey: 'tetap',
+    iuran: 'Lunas',
+    verifikasi: 'Sah',
+    verifikasiKey: 'verified',
+    alert: false,
+    noKK: '3275015506603311',
+    kontak: '+62 822-1405-6630',
+    iuranLabel: 'Lunas (Okt 2024)',
+    members: [
+      { nama: 'Hj. Siti Aminah', meta: 'Kepala Keluarga • 64 Thn • Pensiunan', primary: true },
+      { nama: 'Agus Santoso', meta: 'Anak • 40 Thn • Wiraswasta', primary: false },
+      { nama: 'Rina Marlina', meta: 'Menantu • 38 Thn • Guru PAUD', primary: false },
+      { nama: 'Nadia Putri', meta: 'Cucu • 15 Thn • Pelajar', primary: false },
+      { nama: 'Rizki Ramadhan', meta: 'Cucu • 10 Thn • Pelajar', primary: false }
+    ]
+  },
+  {
+    key: 'denny',
+    blok: 'Blok A4 No. 19',
+    jalan: 'Jl. Kenanga Mas',
+    blokGroup: 'blok-a',
+    kepala: 'Kel. Denny Kusuma',
+    namaPendek: 'Denny Kusuma',
+    nikFull: '3275011112980019',
+    anggota: 1,
+    statusTinggal: 'Kos / Bujang',
+    statusTinggalKey: 'kos',
+    iuran: 'Lunas',
+    verifikasi: 'Sah',
+    verifikasiKey: 'verified',
+    alert: false,
+    noKK: '3275011112980019',
+    kontak: '+62 896-3110-4527',
+    iuranLabel: 'Lunas (Okt 2024)',
+    members: [{ nama: 'Denny Kusuma', meta: 'Penghuni Kos • 26 Thn • Karyawan Swasta', primary: true }]
+  }
+]
+
+KARTU_KELUARGA.forEach((k) => {
+  k.nikMasked = maskNik(k.nikFull)
+  k.members.forEach((m) => {
+    m.initials = initials(m.nama)
+  })
+})
+

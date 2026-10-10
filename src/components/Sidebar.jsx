@@ -1,6 +1,6 @@
 import { NAV_ITEMS } from '../data/mockData'
 
-export default function Sidebar() {
+export default function Sidebar({ activePath, onNavigate }) {
   return (
     <aside className="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 hidden lg:flex flex-col justify-between">
       <div className="flex flex-col">
@@ -48,22 +48,25 @@ export default function Sidebar() {
           </span>
         </div>
         <nav className="flex flex-col gap-1 px-space-md">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.path}
-              href="#"
-              aria-current={item.active ? 'page' : undefined}
-              onClick={(e) => e.preventDefault()}
-              className={
-                item.active
-                  ? 'flex items-center gap-3 px-space-sm py-2 transition-colors bg-primary-container text-on-primary font-semibold rounded-lg'
-                  : 'flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors'
-              }
-            >
-              <span className="material-symbols-outlined text-xl">{item.icon}</span>
-              <span className="font-title-sm text-title-sm">{item.label}</span>
-            </a>
-          ))}
+          {NAV_ITEMS.map((item) => {
+            const isActive = item.path === activePath
+            return (
+              <button
+                key={item.path}
+                type="button"
+                onClick={() => onNavigate(item.path)}
+                aria-current={isActive ? 'page' : undefined}
+                className={
+                  isActive
+                    ? 'flex items-center gap-3 px-space-sm py-2 transition-colors bg-primary-container text-on-primary font-semibold rounded-lg text-left w-full'
+                    : 'flex items-center gap-3 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors text-left w-full'
+                }
+              >
+                <span className="material-symbols-outlined text-xl">{item.icon}</span>
+                <span className="font-title-sm text-title-sm">{item.label}</span>
+              </button>
+            )
+          })}
         </nav>
       </div>
 
