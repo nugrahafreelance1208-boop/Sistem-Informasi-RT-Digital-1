@@ -1,4 +1,8 @@
-export default function WargaKpi() {
+export default function WargaKpi({ liveRows = null, isLive = false }) {
+  const totalKK = isLive && liveRows ? liveRows.length : 128
+  const tetap = isLive && liveRows ? liveRows.filter((r) => (r.statusTinggalKey || 'tetap') === 'tetap').length : 362
+  const kontrak = isLive && liveRows ? liveRows.filter((r) => (r.statusTinggalKey || '') !== 'tetap').length : 66
+  const perlu = isLive && liveRows ? liveRows.filter((r) => (r.verifikasiKey || '') === 'pending').length : 4
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-6">
       <div className="bg-surface-container-lowest p-4 rounded-xl shadow-sm flex items-start justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
@@ -7,7 +11,7 @@ export default function WargaKpi() {
             Total Kepala Keluarga
           </span>
           <div className="flex items-baseline gap-2 mt-1.5">
-            <span className="font-display text-display text-on-surface font-bold leading-none">128</span>
+            <span className="font-display text-display text-on-surface font-bold leading-none">{totalKK}</span>
             <span className="font-title-sm text-title-sm text-on-surface-variant">Keluarga</span>
           </div>
           <div className="flex items-center gap-1.5 mt-3 text-secondary font-label-sm text-label-sm font-medium">
@@ -26,12 +30,12 @@ export default function WargaKpi() {
             Warga Tetap (KTP RT)
           </span>
           <div className="flex items-baseline gap-2 mt-1.5">
-            <span className="font-display text-display text-on-surface font-bold leading-none">362</span>
+            <span className="font-display text-display text-on-surface font-bold leading-none">{tetap}</span>
             <span className="font-title-sm text-title-sm text-on-surface-variant">Jiwa</span>
           </div>
           <div className="flex items-center gap-1.5 mt-3 text-secondary font-label-sm text-label-sm font-medium">
             <span className="material-symbols-outlined text-base leading-none">how_to_reg</span>
-            <span>84.5% dari populasi</span>
+            <span>{isLive ? 'Live dari Supabase' : '84.5% dari populasi'}</span>
           </div>
         </div>
         <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-secondary">

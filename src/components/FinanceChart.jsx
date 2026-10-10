@@ -1,6 +1,19 @@
 import { FINANCE_BARS } from '../data/mockData'
+import { useSupabaseList, SourceBadge } from '../hooks/useSupabaseList'
+import { fetchTren, fetchKas } from '../lib/supabaseQueries'
+import { mapTrenToBars, formatRp } from '../lib/mappersCore'
 
 export default function FinanceChart() {
+  const tren = useSupabaseList(fetchTren, null, null)
+  const kas = useSupabaseList(fetchKas, { periodeKode: 'okt-2024' }, null)
+  const bars = tren.live && tren.data ? mapTrenToBars(tren.data) : FINANCE_BARS
+  let masuk = 8400000
+  let keluar = 3150000
+  if (kas.live && kas.data) {
+    masuk = kas.data.filter((r) => r.jenis === 'masuk').reduce((a, b) => a + Number(b.nominal || 0), 0) || masuk
+    keluar = kas.data.filter((r) => r.jenis === 'keluar').reduce((a, b) => a + Number(b.nominal || 0), 0) || keluar
+  }
+  const surplus = masuk - keluar
   return (
     <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-md">
@@ -10,6 +23,7 @@ export default function FinanceChart() {
             <h2 className="font-title-md text-title-md text-on-surface font-bold">
               Tren Kas &amp; Penerimaan Iuran Warga
             </h2>
+            <div className="mt-1"><SourceBadge live={tren.live || kas.live} loading={tren.loading || kas.loading} /></div>
           </div>
           <p className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
             Komparasi Target vs Realisasi Penerimaan Iuran Lingkungan 6 Bulan Terakhir (Mei - Okt 2024)
@@ -47,7 +61,7 @@ export default function FinanceChart() {
 
           <line stroke="#006d41" strokeDasharray="6 6" strokeOpacity="0.4" strokeWidth="1.5" x1="40" x2="660" y1="35" y2="35"></line>
 
-          {FINANCE_BARS.map((m) => (
+          {bars.map((m) => (
             <g key={m.label}>
               <rect
                 className={m.active ? 'fill-secondary' : 'fill-primary-container'}
@@ -87,15 +101,15 @@ export default function FinanceChart() {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mt-space-md pt-space-xs">
         <div className="p-space-sm bg-surface-container rounded-lg flex items-center justify-between">
           <span className="font-body-sm text-body-sm text-on-surface-variant">Pemasukan Okt 2024</span>
-          <span className="font-code-num text-code-num text-primary-container font-bold">Rp 8.400.000</span>
+          <span className="font-code-num text-code-num text-primary-container font-bold">{formatRp(masuk)}</span>
         </div>
         <div className="p-space-sm bg-surface-container rounded-lg flex items-center justify-between">
           <span className="font-body-sm text-body-sm text-on-surface-variant">Pengeluaran Operasional</span>
-          <span className="font-code-num text-code-num text-error font-bold">Rp 3.150.000</span>
+          <span className="font-code-num text-code-num text-error font-bold">{formatRp(keluar)}</span>
         </div>
         <div className="p-space-sm bg-surface-container rounded-lg flex items-center justify-between">
           <span className="font-body-sm text-body-sm text-on-surface-variant">Surplus Bersih Bulan Ini</span>
-          <span className="font-code-num text-code-num text-secondary font-bold">+Rp 5.250.000</span>
+          <span className="font-code-num text-code-num text-secondary font-bold">+{formatRp(surplus)}</span>
         </div>
       </div>
     </div>

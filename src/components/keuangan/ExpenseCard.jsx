@@ -1,6 +1,15 @@
 import { EXPENSE_LIST } from '../../data/mockData'
+import { useSupabaseList, SourceBadge } from '../../hooks/useSupabaseList'
+import { fetchKas } from '../../lib/supabaseQueries'
+import { mapKasToExpense, formatRp } from '../../lib/mappersCore'
 
-export default function ExpenseCard({ onToast }) {
+export default function ExpenseCard({ onToast, periodeKode = 'okt-2024' }) {
+  const q = useSupabaseList(fetchKas, { periodeKode }, null)
+  const liveRows = q.live && q.data ? q.data.filter((r) => r.jenis === 'keluar').map(mapKasToExpense) : null
+  const list = liveRows ?? EXPENSE_LIST
+  const subtotal = liveRows
+    ? liveRows.reduce((a, e) => a + Number(String(e.nominal).replace(/[^0-9]/g, '') || 0), 0)
+    : 2750000
   return (
     <div className="bg-surface-container-lowest rounded-xl p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4 pb-2 border-b-0">
@@ -11,7 +20,8 @@ export default function ExpenseCard({ onToast }) {
         <span className="font-label-sm text-label-sm text-outline font-semibold">Okt 2024</span>
       </div>
       <div className="flex flex-col gap-3">
-        {EXPENSE_LIST.map((e) => (
+        <div className="mt-1"><SourceBadge live={q.live} loading={q.loading} /></div>
+        {list.map((e) => (
           <div key={e.judul} className="p-3 rounded-lg bg-surface-container-low flex flex-col gap-2">
             <div className="flex items-start justify-between">
               <div className="flex items-start gap-2.5">
@@ -40,7 +50,7 @@ export default function ExpenseCard({ onToast }) {
       </div>
       <div className="mt-4 pt-3 flex items-center justify-between">
         <span className="font-title-sm text-title-sm font-bold text-on-surface">Subtotal Dibelanjakan</span>
-        <span className="font-code-num text-code-num font-bold text-on-surface">Rp 2.750.000</span>
+        <span className="font-code-num text-code-num font-bold text-on-surface">{formatRp(subtotal)}</span>
       </div>
       <button
         className="w-full mt-3 py-2 px-3 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-title-sm text-title-sm font-semibold flex items-center justify-center gap-1.5"

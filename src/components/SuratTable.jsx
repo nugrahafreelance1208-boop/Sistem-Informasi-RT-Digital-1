@@ -1,6 +1,11 @@
 import { SURAT_LIST } from '../data/mockData'
+import { useSupabaseList, SourceBadge } from '../hooks/useSupabaseList'
+import { fetchSurat } from '../lib/supabaseQueries'
+import { mapSuratToTableRow } from '../lib/mappersSurat'
 
 export default function SuratTable({ onReview }) {
+  const q = useSupabaseList(fetchSurat, { statusKey: 'all' }, null)
+  const rows = q.live && q.data ? q.data.slice(0, 4).map((r, i) => mapSuratToTableRow(r, i)) : SURAT_LIST
   return (
     <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
       <div className="flex items-center justify-between pb-space-sm">
@@ -11,8 +16,9 @@ export default function SuratTable({ onReview }) {
               Permohonan Surat Perlu Tindakan Cepat
             </h2>
             <span className="font-body-sm text-body-sm text-on-surface-variant">
-              5 pengajuan warga memerlukan tanda tangan digital dan validasi domisili
+              {rows.length} pengajuan warga memerlukan tanda tangan digital dan validasi domisili
             </span>
+            <div className="mt-1"><SourceBadge live={q.live} loading={q.loading} /></div>
           </div>
         </div>
         <a
@@ -42,7 +48,7 @@ export default function SuratTable({ onReview }) {
             </tr>
           </thead>
           <tbody>
-            {SURAT_LIST.map((s) => (
+            {rows.map((s) => (
               <tr key={s.id} className="hover:bg-surface-container-low transition-colors group">
                 <td className="py-3 px-3">
                   <div className="flex items-center gap-2.5">

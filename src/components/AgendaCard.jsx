@@ -1,6 +1,11 @@
 import { AGENDA_LIST } from '../data/mockData'
+import { useSupabaseList, SourceBadge } from '../hooks/useSupabaseList'
+import { fetchAgenda } from '../lib/supabaseQueries'
+import { mapAgendaRow } from '../lib/mappersSurat'
 
 export default function AgendaCard() {
+  const q = useSupabaseList(fetchAgenda, null, null)
+  const rows = q.live && q.data ? q.data.map(mapAgendaRow) : AGENDA_LIST
   return (
     <div className="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
       <div className="flex items-center justify-between pb-space-sm">
@@ -16,7 +21,8 @@ export default function AgendaCard() {
         </button>
       </div>
       <div className="space-y-space-sm mt-space-xs">
-        {AGENDA_LIST.map((a) =>
+        <div className="mt-1"><SourceBadge live={q.live} loading={q.loading} /></div>
+        {rows.map((a) =>
           a.highlight ? (
             <div
               key={a.id}

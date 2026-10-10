@@ -1,5 +1,8 @@
 import { useMemo, useState } from 'react'
 import { KARTU_KELUARGA } from '../data/mockData'
+import { useSupabaseList, SourceBadge } from '../hooks/useSupabaseList'
+import { fetchKeluargaKK, fetchTagihan } from '../lib/supabaseQueries'
+import { mapKeluargaRow } from '../lib/mappersCore'
 import WargaBanner from '../components/warga/WargaBanner'
 import WargaKpi from '../components/warga/WargaKpi'
 import WargaToolbar from '../components/warga/WargaToolbar'
@@ -12,9 +15,23 @@ export default function DataWargaPage({ onToast }) {
   const [domisili, setDomisili] = useState('all')
   const [verifikasi, setVerifikasi] = useState('all')
   const [masked, setMasked] = useState(true)
-  const [selectedKey, setSelectedKey] = useState('rahmat')
+  const [selectedKey, setSelectedKey] = useState(null)
 
-  const rows = useMemo(() => {
+  const kkQuery = useSupabaseList(fetchKeluargaKK, { search, blokKode: blok, tinggal: domisili, verifikasi }, null)
+  const tagQuery = useSupabaseList(fetchTagihan, { periodeKode: 'okt-2024', status: 'all', metode: 'all' }, null)
+
+  const tagByKk = useMemo(() => {
+    const m = {}
+    if (tagQuery.live && tagQuery.data) for (const t of tagQuery.data) m[t.kk_id] = t
+    return m
+  }, [tagQuery.live, tagQuery.data])
+
+  const liveRows = useMemo(() => {
+    if (!kkQuery.live || !kkQuery.data) return null
+    return kkQuery.data.map((r) => mapKeluargaRow(r, tagByKk))
+  }, [kkQuery.live, kkQuery.data, tagByKk])
+
+  const fallbackRows = useMemo(() => {
     const q = search.trim().toLowerCase()
     return KARTU_KELUARGA.filter((k) => {
       if (blok !== 'all' && k.blokGroup !== blok) return false
@@ -26,14 +43,16 @@ export default function DataWargaPage({ onToast }) {
     })
   }, [search, blok, domisili, verifikasi])
 
-  const selected = KARTU_KELUARGA.find((k) => k.key === selectedKey) ?? KARTU_KELUARGA[0]
+  const rows = liveRows ?? fallbackRows
+  const isLive = Boolean(liveRows)
+  const selected = (rows.find((k) => String(k.key) === String(selectedKey)) ?? rows[0]) || null
 
   const handleReset = () => {
     setSearch('')
     setBlok('all')
     setDomisili('all')
     setVerifikasi('all')
-    onToast('Filter direset ke semua data.')
+    onToast('Filter direset ke semua data (Supabase).')
   }
 
   const handleTableClick = (e) => {
@@ -49,7 +68,11 @@ export default function DataWargaPage({ onToast }) {
   return (
     <div className="flex flex-col w-full pb-16">
       <WargaBanner onToast={onToast} />
-      <WargaKpi />
+      <div className="mt-2 flex items-center gap-2">
+        <SourceBadge live={kkQuery.live} loading={kkQuery.loading} />
+        {kkQuery.live && <span className="font-label-sm text-label-sm text-on-surface-variant">{rows.length} KK dari Supabase</span>}
+      </div>
+      <WargaKpi liveRows={rows} isLive={isLive} />
       <WargaToolbar
         search={search}
         onSearch={setSearch}
